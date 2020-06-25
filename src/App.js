@@ -10,11 +10,15 @@ import { Register } from "./Components/Register/Register";
 import { Checkout } from "./Components/Checkout/Checkout";
 import { Browse } from "./Components/Browse/Browse";
 import { NotFound } from "./Components/NotFound/NotFound";
-
+import { Navigation } from "./Components/NavBar/Navigation";
+import { Footer } from "./Components/NavBar/Footer";
+import { ItemPageOverlay } from "./Components/Browse/ItemPageOverlay";
 function App() {
   return (
     <Router>
       <Provider store={store}>
+        <ItemPageOverlay />
+        <Navigation />
         <Switch>
           <Route exact path="/" component={Home}></Route>
           <Route path="/Login" component={Login}></Route>
@@ -23,6 +27,7 @@ function App() {
           <Route path="/Browse" component={Browse}></Route>
           <Route default component={NotFound}></Route>
         </Switch>
+        <Footer />
       </Provider>
     </Router>
   );
