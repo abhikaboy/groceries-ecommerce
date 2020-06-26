@@ -6,8 +6,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
 import { AnimationWrapper } from "react-hover-animation";
+import { setSearch } from "../../Actions/setSearch";
+import { connect } from "react-redux";
 
-export class Navigation extends Component {
+export class NavigationRaw extends Component {
+  search = () => {
+    this.props.setSearch(true);
+  };
   render() {
     return (
       <div>
@@ -39,6 +44,7 @@ export class Navigation extends Component {
                         src="https://static.thenounproject.com/png/101791-200.png"
                         rounded
                         style={{ width: "30px", height: "30px" }}
+                        onClick={this.search}
                       />
                     </AnimationWrapper>
                   </Col>
@@ -86,4 +92,18 @@ const imageStyle = {
   height: "80px",
   textAlign: "center",
 };
-export default Navigation;
+const mapStateToProps = (state) => {
+  return {
+    search: state.search,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  // propName: (parameters) => dispatch(action)
+  return {
+    setSearch: (show) => dispatch(setSearch(show)),
+  };
+};
+export const Navigation = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NavigationRaw);

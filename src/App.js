@@ -14,11 +14,14 @@ import { NotFound } from "./Components/NotFound/NotFound";
 import { Navigation } from "./Components/NavBar/Navigation";
 import { Footer } from "./Components/NavBar/Footer";
 import { ItemPageOverlay } from "./Components/Browse/ItemPageOverlay";
+import { SearchOverlay } from "./Components/NavBar/SearchOverlay";
+
 function App() {
   return (
     <Router>
       <Provider store={store}>
         <ItemPageOverlay />
+        <SearchOverlay />
         <Navigation />
         <Switch>
           <Route exact path="/" component={Home}></Route>
