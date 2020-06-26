@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+import Quantity from "./Quantity";
 import { connect } from "react-redux";
 import { setActive } from "../../Actions/setActiveItem";
 export class ItemPageOverlayRaw extends Component {
@@ -21,7 +22,7 @@ export class ItemPageOverlayRaw extends Component {
     let item = this.props.item;
     return (
       <Modal show={this.props.item.display} onHide={this.close}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton style={{ textAlign: "center" }}>
           <Modal.Title style={{ textAlign: "center" }}>{item.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -32,11 +33,18 @@ export class ItemPageOverlayRaw extends Component {
               </Col>
               <Col>
                 <Container style={{ textAlign: "center" }}>
-                  <Row>
-                    <p>{item.description}</p>
+                  <Row style={{ textAlign: "center" }}>
+                    <Col>
+                      <p>{item.description}</p>
+                    </Col>
                   </Row>
-                  <Row>
-                    <h3>{item.price}</h3>
+                  <Row style={{ textAlign: "center" }}>
+                    <Col>
+                      <h3>{item.price}</h3>
+                    </Col>
+                  </Row>
+                  <Row style={{ textAlign: "center" }}>
+                    <Quantity />
                   </Row>
                 </Container>
               </Col>

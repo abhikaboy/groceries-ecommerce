@@ -8,6 +8,7 @@ import { Home } from "./Components/Home/Home";
 import { Login } from "./Components/Login/Login";
 import { Register } from "./Components/Register/Register";
 import { Checkout } from "./Components/Checkout/Checkout";
+import { Cart } from "./Components/Cart/Cart";
 import { Browse } from "./Components/Browse/Browse";
 import { NotFound } from "./Components/NotFound/NotFound";
 import { Navigation } from "./Components/NavBar/Navigation";
@@ -25,6 +26,7 @@ function App() {
           <Route path="/Register" component={Register}></Route>
           <Route path="/Checkout" component={Checkout}></Route>
           <Route path="/Browse" component={Browse}></Route>
+          <Route path="/Cart" component={Cart}></Route>
           <Route default component={NotFound}></Route>
         </Switch>
         <Footer />

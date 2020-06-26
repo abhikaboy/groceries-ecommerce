@@ -30,22 +30,40 @@ export class Navigation extends Component {
                 </Nav>
               </Navbar>
             </Col>
-            <div style={{ position: "absolute", marginLeft: "92.5%" }}>
-              <Image
-                src="https://static.thenounproject.com/png/101791-200.png"
-                icon
-                style={{ width: "30px", height: "30px" }}
-              />
-              <Image
-                src="https://static.thenounproject.com/png/3134331-200.png"
-                icon
-                style={{ width: "30px", height: "30px" }}
-              />
-              <Image
-                src="https://freeiconshop.com/wp-content/uploads/edd/cart-outline.png"
-                icon
-                style={{ width: "30px", height: "30px" }}
-              />
+            <div style={{ position: "absolute", marginLeft: "90%" }}>
+              <Container>
+                <Row>
+                  <Col>
+                    <AnimationWrapper>
+                      <Image
+                        src="https://static.thenounproject.com/png/101791-200.png"
+                        rounded
+                        style={{ width: "30px", height: "30px" }}
+                      />
+                    </AnimationWrapper>
+                  </Col>
+                  <Col>
+                    <AnimationWrapper>
+                      <Image
+                        src="https://static.thenounproject.com/png/3134331-200.png"
+                        rounded
+                        style={{ width: "30px", height: "30px" }}
+                      />
+                    </AnimationWrapper>
+                  </Col>
+                  <Col>
+                    <AnimationWrapper>
+                      <a href="/cart">
+                        <Image
+                          src="https://freeiconshop.com/wp-content/uploads/edd/cart-outline.png"
+                          rounded
+                          style={{ width: "30px", height: "30px" }}
+                        />
+                      </a>
+                    </AnimationWrapper>
+                  </Col>
+                </Row>
+              </Container>
             </div>
           </Row>
         </Container>
