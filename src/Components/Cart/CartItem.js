@@ -59,12 +59,14 @@ export default class CartItem extends Component {
                   margin: "auto",
                 }}
               />
-              <Button
-                variant="danger"
-                style={{ textAlign: "center", margin: "auto" }}
-              >
-                x
-              </Button>
+              <div style={{ textAlign: "center" }}>
+                <Button
+                  variant="danger"
+                  style={{ textAlign: "center", margin: "auto" }}
+                >
+                  Remove
+                </Button>
+              </div>
             </Col>
           </Row>
         </Container>

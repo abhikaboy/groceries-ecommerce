@@ -6,21 +6,47 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
 import InputGroup from "react-bootstrap/InputGroup";
+import { setQuantity } from "../../Actions/setQuantity";
+import { connect } from "react-redux";
 
-export class Quantity extends Component {
+export class QuantityRaw extends Component {
+  add = () => {
+    this.props.setQuantity(this.props.item.quantity + 1);
+  };
+  sub = () => {
+    this.props.setQuantity(this.props.item.quantity - 1);
+  };
   render() {
     return (
       <InputGroup className="mb-3">
         <InputGroup.Prepend>
-          <Button variant="success">-</Button>
+          <Button variant="success" onClick={this.sub}>
+            -
+          </Button>
         </InputGroup.Prepend>
-        <FormControl aria-label="1" value={1} />
+        <FormControl aria-label="1" value={this.props.item.quantity} />
         <InputGroup.Append>
-          <Button variant="success">+</Button>
+          <Button variant="success" onClick={this.add}>
+            +
+          </Button>
         </InputGroup.Append>
       </InputGroup>
     );
   }
 }
 
-export default Quantity;
+const mapStateToProps = (state) => {
+  return {
+    item: state.item,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  // propName: (parameters) => dispatch(action)
+  return {
+    setQuantity: (num) => dispatch(setQuantity(num)),
+  };
+};
+export const Quantity = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(QuantityRaw);

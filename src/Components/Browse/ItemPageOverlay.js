@@ -5,9 +5,10 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
-import Quantity from "./Quantity";
+import { Quantity } from "./Quantity";
 import { connect } from "react-redux";
 import { setActive } from "../../Actions/setActiveItem";
+import { setQuantity } from "../../Actions/setQuantity";
 export class ItemPageOverlayRaw extends Component {
   close = () => {
     this.props.setActive({
@@ -16,7 +17,11 @@ export class ItemPageOverlayRaw extends Component {
       price: "",
       description: "",
       display: false,
+      quantity: 0,
     });
+  };
+  getTotal = () => {
+    return NaN;
   };
   render() {
     let item = this.props.item;
@@ -46,6 +51,7 @@ export class ItemPageOverlayRaw extends Component {
                   <Row style={{ textAlign: "center" }}>
                     <Quantity />
                   </Row>
+                  <Row>Subtotal: {this.getTotal()}</Row>
                 </Container>
               </Col>
             </Row>
@@ -71,6 +77,7 @@ const mapDispatchToProps = (dispatch) => {
   // propName: (parameters) => dispatch(action)
   return {
     setActive: (data) => dispatch(setActive(data)),
+    setQuantity: (num) => dispatch(setQuantity(num)),
   };
 };
 export const ItemPageOverlay = connect(

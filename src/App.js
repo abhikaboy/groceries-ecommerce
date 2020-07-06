@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { Home } from "./Components/Home/Home";
 import { Login } from "./Components/Login/Login";
-import { Register } from "./Components/Register/Register";
+import { Register } from "./Components/Login/Register";
 import { Checkout } from "./Components/Checkout/Checkout";
 import { Cart } from "./Components/Cart/Cart";
 import { Browse } from "./Components/Browse/Browse";
@@ -26,6 +26,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home}></Route>
           <Route path="/Login" component={Login}></Route>
+          <Route path="/Register" component={Register}></Route>
           <Route path="/Register" component={Register}></Route>
           <Route path="/Checkout" component={Checkout}></Route>
           <Route path="/Browse" component={Browse}></Route>

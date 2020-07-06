@@ -9,7 +9,7 @@ export class Footer extends Component {
           <li>Careers</li>
           <li>Contact</li>
         </ul>
-        <p>Shoprite at Hamilton Marketplace</p>
+        <p style={{ textAlign: "center" }}>Shoprite at Hamilton Marketplace</p>
       </div>
     );
   }

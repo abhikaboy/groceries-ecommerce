@@ -74,58 +74,28 @@ export class Browse extends Component {
                 <Col>
                   <ItemCard
                     name="Apple"
-                    price="5$"
+                    price="5"
                     img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
                   />
                 </Col>
                 <Col>
                   <ItemCard
                     name="Apple"
-                    price="5$"
+                    price="5"
                     img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
                   />
                 </Col>
                 <Col>
                   <ItemCard
                     name="Apple"
-                    price="5$"
+                    price="5"
                     img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
                   />
                 </Col>
                 <Col>
                   <ItemCard
                     name="Apple"
-                    price="5$"
-                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
-                  />
-                </Col>
-              </Row>
-              <Row style={{ marginBottom: "3vh" }}>
-                <Col>
-                  <ItemCard
-                    name="Apple"
-                    price="5$"
-                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
-                  />
-                </Col>
-                <Col>
-                  <ItemCard
-                    name="Apple"
-                    price="5$"
-                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
-                  />
-                </Col>
-                <Col>
-                  <ItemCard
-                    name="Apple"
-                    price="5$"
-                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
-                  />
-                </Col>
-                <Col>
-                  <ItemCard
-                    name="Apple"
-                    price="5$"
+                    price="5"
                     img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
                   />
                 </Col>
@@ -134,28 +104,58 @@ export class Browse extends Component {
                 <Col>
                   <ItemCard
                     name="Apple"
-                    price="5$"
+                    price="5"
                     img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
                   />
                 </Col>
                 <Col>
                   <ItemCard
                     name="Apple"
-                    price="5$"
+                    price="5"
                     img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
                   />
                 </Col>
                 <Col>
                   <ItemCard
                     name="Apple"
-                    price="5$"
+                    price="5"
                     img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
                   />
                 </Col>
                 <Col>
                   <ItemCard
                     name="Apple"
-                    price="5$"
+                    price="5"
+                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
+                  />
+                </Col>
+              </Row>
+              <Row style={{ marginBottom: "3vh" }}>
+                <Col>
+                  <ItemCard
+                    name="Apple"
+                    price="5"
+                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
+                  />
+                </Col>
+                <Col>
+                  <ItemCard
+                    name="Apple"
+                    price="5"
+                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
+                  />
+                </Col>
+                <Col>
+                  <ItemCard
+                    name="Apple"
+                    price="5"
+                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
+                  />
+                </Col>
+                <Col>
+                  <ItemCard
+                    name="Apple"
+                    price="5"
                     img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
                   />
                 </Col>
