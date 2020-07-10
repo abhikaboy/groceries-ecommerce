@@ -11,12 +11,29 @@ import { Quantity } from "../Browse/Quantity";
 
 import { CSSTransition } from "react-transition-group";
 import "./styles.css";
+const axios = require("axios");
 
 export class ItemCardRaw extends Component {
   constructor(props) {
     super(props);
     this.state = { hovered: false };
   }
+  addCart = () => {
+    axios({
+      method: "post",
+      url:
+        "http://runmobileapps.com/sales_intig/grocerry_backend/api/add-to-cart",
+      params: {
+        product_id: this.props.id,
+        products: [this.props.id],
+        shop_id: 1,
+        qty: 2,
+      },
+    })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+    console.log(this.props.id);
+  };
   clickFunc = () => {
     // this.props.setActive({
     //   name: this.props.name,
@@ -81,14 +98,14 @@ export class ItemCardRaw extends Component {
               >
                 <Quantity />
               </div>
-              <Button>Add To Cart</Button>
+              <Button onClick={this.addCart}>Add To Cart</Button>
             </div>
           </CSSTransition>
           <Card.Img variant="top" src={this.props.img}></Card.Img>
           <Card.Body>
             <ListGroup variant="flush" style={center}>
               <ListGroup.Item>{this.props.name}</ListGroup.Item>
-              <ListGroup.Item>Item Description</ListGroup.Item>
+              <ListGroup.Item>{this.props.description}</ListGroup.Item>
               <ListGroup.Item style={{ color: "rgb(50,200,50)" }}>
                 In Stock
               </ListGroup.Item>

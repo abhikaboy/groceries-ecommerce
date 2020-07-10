@@ -4,7 +4,57 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import CartItem from "./CartItem";
-export class Cart extends Component {
+import { connect } from "react-redux";
+import { setCart } from "../../Actions/setCart";
+const axios = require("axios");
+
+export class CartRaw extends Component {
+  componentDidMount() {
+    axios({
+      method: "post",
+      url:
+        "https://runmobileapps.com/sales_intig/grocerry_backend/api/cart-items-list?shop_id=1",
+      params: {
+        shop_id: 1,
+      },
+    })
+      .then((res) => this.props.setCart(res.data))
+      .catch((err) => console.log(err));
+
+    axios({
+      method: "post",
+      url:
+        "http://runmobileapps.com/sales_intig/grocerry_backend/api/remove-cart-items",
+      params: {
+        shop_id: 1,
+        clear_all: [1],
+      },
+    })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }
+  createItems = (department) => {
+    let items = this.props.cart.cart_items;
+    console.log(items);
+    let filtered = items.filter(
+      (item) => item.department_name == department.name
+    );
+    let elements = filtered.map((item) => (
+      <Row>
+        <CartItem
+          name={item.product_name}
+          description={item.product_description}
+          price={item.per_unit_price}
+          total={item.total_cost}
+          quantity={item.quantity}
+        />
+      </Row>
+    ));
+    if (filtered.length > 0) {
+      elements.unshift(<h4>{department.name}</h4>);
+    }
+    return elements;
+  };
   render() {
     return (
       <Container>
@@ -12,39 +62,9 @@ export class Cart extends Component {
           <h2>Cart</h2>
         </Row>
         <Row></Row>
-        <Row>
-          <h4>Diary</h4>
-        </Row>
-        <Row>
-          <CartItem />
-        </Row>
-        <Row>
-          <CartItem />
-        </Row>
-        <Row>
-          <CartItem />
-        </Row>
-        <Row>
-          <h4>Meats</h4>
-        </Row>
-        <Row>
-          <CartItem />
-        </Row>
-        <Row>
-          <h4>Bakery</h4>
-        </Row>
-        <Row>
-          <h4>Fruits & Vegetables</h4>
-        </Row>
-        <Row>
-          <CartItem />
-        </Row>
-        <Row>
-          <CartItem />
-        </Row>
-        <Row>
-          <h4>Snacks</h4>
-        </Row>
+        {this.props.browse.departments.map((department) =>
+          this.createItems(department)
+        )}
         <Row>
           <Button
             style={{
@@ -64,4 +84,16 @@ export class Cart extends Component {
   }
 }
 
-export default Cart;
+const mapStateToProps = (state) => {
+  return {
+    cart: state.cart,
+    browse: state.browse,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  // propName: (parameters) => dispatch(action)
+  return {
+    setCart: (cart) => dispatch(setCart(cart)),
+  };
+};
+export const Cart = connect(mapStateToProps, mapDispatchToProps)(CartRaw);

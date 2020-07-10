@@ -1,11 +1,15 @@
 import { combineReducers } from "redux";
-import homeReducer from "./homeReducer";
+import apiConfig from "./apiConfig";
 import activeItemReducer from "./activeItemReducer";
 import searchReducer from "./searchReducer";
+import browseReducer from "./browseReducer";
+import cartReducer from "./cartReducer";
 const rootReducer = combineReducers({
-  home: homeReducer,
+  api: apiConfig,
   item: activeItemReducer,
   search: searchReducer,
+  browse: browseReducer,
+  cart: cartReducer,
 });
 
 export default rootReducer;

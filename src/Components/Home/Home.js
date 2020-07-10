@@ -7,7 +7,49 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import { ItemCard } from "./ItemCard";
 import { DepartmentIcon } from "./DepartmentIcon";
-export class Home extends Component {
+
+import { connect } from "react-redux";
+export class HomeRaw extends Component {
+  generateTable = (products) => {
+    console.log(products);
+    console.log(this.props.category);
+    if (products.length > 0) {
+      let total = [];
+      let rows = [];
+      for (let i = 0; i < products.length; i++) {
+        console.log(products[i]);
+        if (i % 4 == 0) {
+          console.log(i);
+          // ready to start a new row
+          rows.push([<Col></Col>, <Col></Col>, <Col>e</Col>, <Col>e</Col>]);
+          console.log("adding row!");
+        }
+        rows[rows.length - 1][i % 4] = (
+          <Col>
+            <DepartmentIcon
+              name={products[i].name}
+              src="
+                https://img.icons8.com/cotton/2x/steak-rare.png"
+            />
+          </Col>
+        );
+      }
+      for (let i = 0; i < rows.length; i++) {
+        console.log(total);
+        console.log(rows[i]);
+        total.push(<Row style={{ width: "150%" }}>{rows[i]}</Row>);
+      }
+      console.log("TOTAL!!!");
+      return total;
+    } else {
+      return (
+        <Row>
+          {" "}
+          <h4>Department Not Found</h4>
+        </Row>
+      );
+    }
+  };
   render() {
     return (
       <Container fluid>
@@ -125,48 +167,7 @@ export class Home extends Component {
         >
           <Container>
             <Row style={center}>
-              <Col>
-                <DepartmentIcon
-                  src="https://lh3.googleusercontent.com/proxy/1PbcGpUQInWPYfVCdy5XIAAnoaepq-3BIKSfNo1aVE38dg-huaX0_CH5ZhvbzBz9zmweq6NiFpFZINBioT3b6YUaFabIpbW0zVl6A5JtCyVQwujILb4Pw1p_zBpkPZwlagwPNVXIoXsPBMt195ZcqY4G1NZQ5Nr1"
-                  name="Dairy"
-                />
-              </Col>
-              <Col>
-                <DepartmentIcon
-                  name="Bakery"
-                  src="https://lh3.googleusercontent.com/proxy/LU3fHekcLszNCY5YfBEJ_mtAxso8B5v97RrBhCJaMqgkI0CsIpMlpOBUBBMJWp1Jah4BMtADstg8K1Q1ZEJVUFW33M_7sWgyvDEtOVoi8U6h7o26mTzYa1Kj-zw-QrvK4LRxP6cnMrE13YhU4J5KJWaeBZy3X1M"
-                ></DepartmentIcon>
-              </Col>
-              <Col>
-                <DepartmentIcon
-                  name="Meats"
-                  src="
-                    https://img.icons8.com/cotton/2x/steak-rare.png"
-                />
-              </Col>
-            </Row>
-            <Row style={center}>
-              <Col>
-                <DepartmentIcon
-                  name="Beverages"
-                  src="
-                    https://www.shareicon.net/data/256x256/2015/11/12/670770_glasses_512x512.png"
-                />
-              </Col>
-              <Col>
-                <DepartmentIcon
-                  name="Fruits & Vegetables"
-                  src="
-                    https://vignette.wikia.nocookie.net/animalcrossing/images/9/97/NH-Furniture-Fruit_basket.png/revision/latest/scale-to-width-down/340?cb=20200329085208"
-                />
-              </Col>
-              <Col>
-                <DepartmentIcon
-                  name="Beverages"
-                  src="
-                    https://www.shareicon.net/data/256x256/2015/11/12/670770_glasses_512x512.png"
-                />
-              </Col>
+              {this.generateTable(this.props.browse.departments)}
             </Row>
           </Container>
         </Row>
@@ -265,4 +266,15 @@ const featureText = {
   paddingTop: "150px",
   fontFamily: "Raleway",
 };
-export default Home;
+
+const mapStateToProps = (state) => {
+  return {
+    browse: state.browse,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  // propName: (parameters) => dispatch(action)
+  return {};
+};
+
+export const Home = connect(mapStateToProps, mapDispatchToProps)(HomeRaw);

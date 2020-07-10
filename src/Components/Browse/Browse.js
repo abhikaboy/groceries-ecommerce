@@ -8,9 +8,15 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import { ItemCard } from "../Home/ItemCard";
-import AnimatedListItem from "./AnimatedListItem";
+import { AnimatedListItem } from "./AnimatedListItem";
+import CategoryProducts from "./CategoryProducts";
+import { connect } from "react-redux";
+import { setCategories } from "../../Actions/setCategories";
 
-export class Browse extends Component {
+const axios = require("axios");
+
+export class BrowseRaw extends Component {
+  componentDidMount() {}
   render() {
     return (
       <Container fluid>
@@ -50,16 +56,15 @@ export class Browse extends Component {
                 <Col style={{ textAlign: "center", color: "black" }}>
                   <ListGroup variant="flush">
                     <ListGroup.Item>
-                      <h3>Categories</h3>
+                      <h3>Departments</h3>
                     </ListGroup.Item>
-                    <AnimatedListItem name="Dairy" selected={true} />
-                    <AnimatedListItem name="Meats" selected={false} />
-                    <AnimatedListItem name="Bakery" selected={false} />
-                    <AnimatedListItem
-                      name="Fruits & Vegetables"
-                      selected={false}
-                    />
-                    <AnimatedListItem name="Snacks" selected={false} />
+                    {this.props.browse.departments.map((department) => (
+                      <AnimatedListItem
+                        name={department.name}
+                        selected={false}
+                        id={department.id}
+                      />
+                    ))}
                   </ListGroup>
                 </Col>
               </Row>
@@ -68,98 +73,14 @@ export class Browse extends Component {
           <Col>
             <Container fluid>
               <Row>
-                <h2>Dairy</h2>
+                <h2>{this.props.browse.activeDepartment.name}</h2>
               </Row>
-              <Row style={{ marginBottom: "3vh" }}>
-                <Col>
-                  <ItemCard
-                    name="Apple"
-                    price="5"
-                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
-                  />
-                </Col>
-                <Col>
-                  <ItemCard
-                    name="Apple"
-                    price="5"
-                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
-                  />
-                </Col>
-                <Col>
-                  <ItemCard
-                    name="Apple"
-                    price="5"
-                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
-                  />
-                </Col>
-                <Col>
-                  <ItemCard
-                    name="Apple"
-                    price="5"
-                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
-                  />
-                </Col>
-              </Row>
-              <Row style={{ marginBottom: "3vh" }}>
-                <Col>
-                  <ItemCard
-                    name="Apple"
-                    price="5"
-                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
-                  />
-                </Col>
-                <Col>
-                  <ItemCard
-                    name="Apple"
-                    price="5"
-                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
-                  />
-                </Col>
-                <Col>
-                  <ItemCard
-                    name="Apple"
-                    price="5"
-                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
-                  />
-                </Col>
-                <Col>
-                  <ItemCard
-                    name="Apple"
-                    price="5"
-                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
-                  />
-                </Col>
-              </Row>
-              <Row style={{ marginBottom: "3vh" }}>
-                <Col>
-                  <ItemCard
-                    name="Apple"
-                    price="5"
-                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
-                  />
-                </Col>
-                <Col>
-                  <ItemCard
-                    name="Apple"
-                    price="5"
-                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
-                  />
-                </Col>
-                <Col>
-                  <ItemCard
-                    name="Apple"
-                    price="5"
-                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
-                  />
-                </Col>
-                <Col>
-                  <ItemCard
-                    name="Apple"
-                    price="5"
-                    img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
-                  />
-                </Col>
-              </Row>
+              {this.props.browse.categories.map((category) => (
+                <Row>
+                  <h3>{category.name}</h3>
+                  <CategoryProducts category={category.name} />
+                </Row>
+              ))}
             </Container>
           </Col>
         </Row>
@@ -167,5 +88,15 @@ export class Browse extends Component {
     );
   }
 }
-
-export default Browse;
+const mapStateToProps = (state) => {
+  return {
+    browse: state.browse,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  // propName: (parameters) => dispatch(action)
+  return {
+    setCategories: (categories) => dispatch(setCategories(categories)),
+  };
+};
+export const Browse = connect(mapStateToProps, mapDispatchToProps)(BrowseRaw);

@@ -29,7 +29,9 @@ export default class CartItem extends Component {
               />
             </Col>
             <Col sm={8}>
-              <h3 style={{ paddingTop: "10px", marginBottom: "0px" }}>Apple</h3>
+              <h3 style={{ paddingTop: "10px", marginBottom: "0px" }}>
+                {this.props.name}
+              </h3>
               <p
                 style={{
                   marginTop: "0px",
@@ -39,7 +41,7 @@ export default class CartItem extends Component {
               >
                 In Stock
               </p>
-              <p>This is the item description</p>
+              <p>{this.props.description}</p>
             </Col>
             <Col
               style={{
@@ -52,7 +54,7 @@ export default class CartItem extends Component {
               <p
                 style={{ padding: "15px", margin: "auto", textAlign: "center" }}
               >
-                $12.00
+                {this.props.total}
               </p>
               <Quantity
                 style={{
