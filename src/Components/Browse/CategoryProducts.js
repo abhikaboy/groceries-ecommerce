@@ -23,11 +23,19 @@ export class CategoryProducts extends Component {
         if (i % 4 == 0) {
           console.log(i);
           // ready to start a new row
-          rows.push([<Col></Col>, <Col></Col>, <Col></Col>, <Col></Col>]);
+          rows.push([
+            <Col sm={6} xs={12} md={4} lg={3}></Col>,
+            <Col sm={6} xs={12} md={4} lg={3}></Col>,
+            <Col sm={6} xs={12} md={4} lg={3}></Col>,
+            <Col sm={6} xs={12} md={4} lg={3}>
+              {" "}
+              sm={6} xs={12} md={4} lg={3}
+            </Col>,
+          ]);
           console.log("adding row!");
         }
         rows[rows.length - 1][i % 4] = (
-          <Col>
+          <Col sm={6} xs={12} md={4} lg={3}>
             <ItemCard
               price={products[i].price}
               name={products[i].name}

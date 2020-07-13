@@ -18,13 +18,23 @@ import { ItemPageOverlay } from "./Components/Browse/ItemPageOverlay";
 import { SearchOverlay } from "./Components/NavBar/SearchOverlay";
 import { setDepartments } from "./Actions/setDepartments";
 import { setCategories } from "./Actions/setCategories";
-
+import { setCart } from "./Actions/setCart";
 const axios = require("axios");
 //const proxyurl = "https://cors-anywhere.herokuapp.com/";
 
 export class AppRaw extends Component {
   // setting defaults
   componentDidMount() {
+    axios({
+      method: "post",
+      url:
+        "https://runmobileapps.com/sales_intig/grocerry_backend/api/cart-items-list?shop_id=1",
+      params: {
+        shop_id: 1,
+      },
+    })
+      .then((res) => this.props.setCart(res.data))
+      .catch((err) => console.log(err));
     axios({
       method: "get",
       url:
@@ -78,6 +88,7 @@ export class AppRaw extends Component {
 const mapStateToProps = (state) => {
   return {
     browse: state.browse,
+    cart: state.cart,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -85,6 +96,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setDepartments: (departments) => dispatch(setDepartments(departments)),
     setCategories: (categories) => dispatch(setCategories(categories)),
+    setCart: (cart) => dispatch(setCart(cart)),
   };
 };
 export const App = connect(mapStateToProps, mapDispatchToProps)(AppRaw);

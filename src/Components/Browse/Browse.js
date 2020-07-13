@@ -73,14 +73,20 @@ export class BrowseRaw extends Component {
           <Col>
             <Container fluid>
               <Row>
-                <h2>{this.props.browse.activeDepartment.name}</h2>
+                <Col>
+                  <h2>{this.props.browse.activeDepartment.name}</h2>
+                </Col>
               </Row>
-              {this.props.browse.categories.map((category) => (
-                <Row>
-                  <h3>{category.name}</h3>
-                  <CategoryProducts category={category.name} />
-                </Row>
-              ))}
+              <Row>
+                <Col>
+                  {this.props.browse.categories.map((category) => (
+                    <Row>
+                      <h3>{category.name}</h3>
+                      <CategoryProducts category={category.name} />
+                    </Row>
+                  ))}
+                </Col>
+              </Row>
             </Container>
           </Col>
         </Row>

@@ -8,6 +8,8 @@ import { connect } from "react-redux";
 import { AnimationWrapper } from "react-hover-animation";
 import { setActive } from "../../Actions/setActiveItem";
 import { Quantity } from "../Browse/Quantity";
+import { setQuantity } from "../../Actions/setQuantity";
+import { setCart } from "../../Actions/setCart";
 
 import { CSSTransition } from "react-transition-group";
 import "./styles.css";
@@ -18,6 +20,20 @@ export class ItemCardRaw extends Component {
     super(props);
     this.state = { hovered: false };
   }
+  afterAdd = (res) => {
+    this.props.setQuantity(1);
+    axios({
+      method: "post",
+      url:
+        "https://runmobileapps.com/sales_intig/grocerry_backend/api/cart-items-list?shop_id=1",
+      params: {
+        shop_id: 1,
+      },
+    })
+      .then((res) => this.props.setCart(res.data))
+      .catch((err) => console.log(err));
+    console.log(res);
+  };
   addCart = () => {
     axios({
       method: "post",
@@ -27,10 +43,10 @@ export class ItemCardRaw extends Component {
         product_id: this.props.id,
         products: [this.props.id],
         shop_id: 1,
-        qty: 2,
+        qty: [this.props.item.quantity],
       },
     })
-      .then((res) => console.log(res))
+      .then((res) => this.afterAdd(res))
       .catch((err) => console.log(err));
     console.log(this.props.id);
   };
@@ -48,6 +64,19 @@ export class ItemCardRaw extends Component {
   };
   mouseOut = () => {
     this.setState({ hovered: false });
+    this.props.setQuantity(1);
+  };
+  checkCart = () => {
+    let filtered = this.props.cart.cart_items.filter(
+      (cartItem) => cartItem.product_id == this.props.id
+    );
+    if (filtered.length > 0) {
+      return (
+        <h6 style={{ backgroundColor: "rgba(0,255,0,0.2)" }}>Item In Cart</h6>
+      );
+    } else {
+      return <div></div>;
+    }
   };
   render() {
     return (
@@ -101,7 +130,11 @@ export class ItemCardRaw extends Component {
               <Button onClick={this.addCart}>Add To Cart</Button>
             </div>
           </CSSTransition>
-          <Card.Img variant="top" src={this.props.img}></Card.Img>
+          <Card.Img
+            variant="top"
+            style={{ width: "80%", margin: "auto" }}
+            src={this.props.img}
+          ></Card.Img>
           <Card.Body>
             <ListGroup variant="flush" style={center}>
               <ListGroup.Item>{this.props.name}</ListGroup.Item>
@@ -111,7 +144,11 @@ export class ItemCardRaw extends Component {
               </ListGroup.Item>
             </ListGroup>
           </Card.Body>
-          <Card.Footer style={center}>{this.props.price}</Card.Footer>
+          <Card.Footer style={center}>
+            {this.checkCart()}
+            <br></br>
+            {this.props.price}
+          </Card.Footer>
         </Card>
       </AnimationWrapper>
     );
@@ -126,12 +163,15 @@ const center = {
 const mapStateToProps = (state) => {
   return {
     item: state.item,
+    cart: state.cart,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   // propName: (parameters) => dispatch(action)
   return {
     setActive: (data) => dispatch(setActive(data)),
+    setQuantity: (num) => dispatch(setQuantity(num)),
+    setCart: (cart) => dispatch(setCart(cart)),
   };
 };
 

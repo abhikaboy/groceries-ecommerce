@@ -43,7 +43,7 @@ export class NavigationRaw extends Component {
   render() {
     return (
       <div>
-        <Container style={containerStyle} fluid justify>
+        <Container style={containerStyle} fluid>
           <Row>
             <Col>
               <Image
@@ -54,70 +54,99 @@ export class NavigationRaw extends Component {
           </Row>
           <Row>
             <Col>
-              <Navbar bg="dark" variant="dark" style={center}>
-                <Nav className="mr-auto center" style={center}>
-                  <Nav.Link href="/">Home</Nav.Link>
-                  <Nav.Link href="browse">Shop By Department</Nav.Link>
-                </Nav>
+              <Navbar
+                collapseOnSelect
+                expand="md"
+                bg="dark"
+                variant="dark"
+                style={center}
+              >
+                <Navbar.Toggle
+                  style={{ margin: "auto" }}
+                  aria-controls="responsive-navbar-nav"
+                />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                  <Nav className="mr-auto center" style={center}>
+                    <Nav.Link href="/">Home</Nav.Link>
+                    {this.props.browse.departments.map((department) => (
+                      <Nav.Link href="/browse">{department.name}</Nav.Link>
+                    ))}
+                  </Nav>
+                </Navbar.Collapse>
               </Navbar>
             </Col>
-            <div style={{ position: "absolute", marginLeft: "90%" }}>
-              <Container>
-                <Row>
-                  <Col>
-                    <AnimationWrapper>
-                      <Image
-                        src="https://cdn.discordapp.com/attachments/468305263124807690/727180207974252604/010-zoom.png"
-                        rounded
-                        style={{
-                          width: "30px",
-                          height: "30px",
-                          filter: "invert(100%)",
-                        }}
-                        onClick={this.search}
-                      />
-                    </AnimationWrapper>
-                  </Col>
-                  <Col>
-                    <OverlayTrigger
-                      placement="bottom"
-                      delay={{ show: 250, hide: 400 }}
-                      overlay={loginPopover}
-                      trigger="click"
-                    >
-                      <AnimationWrapper>
-                        <Image
-                          src="https://media.discordapp.net/attachments/468305263124807690/727180178467455107/009-user.png"
-                          rounded
-                          style={{
-                            width: "30px",
-                            height: "30px",
-                            filter: "invert(100%)",
-                          }}
-                          id="profileIcon"
-                        />
-                      </AnimationWrapper>
-                    </OverlayTrigger>
-                  </Col>
-                  <Col>
-                    <AnimationWrapper>
-                      <a href="/cart">
-                        <Image
-                          src="https://cdn.discordapp.com/attachments/468305263124807690/727180131608559656/001-shopping-cart.png"
-                          rounded
-                          style={{
-                            width: "30px",
-                            height: "30px",
-                            filter: "invert(100%)",
-                          }}
-                        />
-                      </a>
-                    </AnimationWrapper>
-                  </Col>
-                </Row>
-              </Container>
-            </div>
           </Row>
+          <div style={{ display: "inline-block" }}>
+            <div
+              style={{
+                width: "5vh",
+                textAlign: "center",
+                display: "inline-block",
+              }}
+            >
+              <AnimationWrapper>
+                <Image
+                  src="https://cdn.discordapp.com/attachments/468305263124807690/727180207974252604/010-zoom.png"
+                  rounded
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    filter: "invert(100%)",
+                  }}
+                  onClick={this.search}
+                />
+              </AnimationWrapper>
+            </div>
+            <div
+              style={{
+                width: "5vh",
+                textAlign: "center",
+                display: "inline-block",
+              }}
+            >
+              <OverlayTrigger
+                placement="bottom"
+                delay={{ show: 250, hide: 400 }}
+                overlay={loginPopover}
+                trigger="click"
+              >
+                <AnimationWrapper>
+                  <Image
+                    src="https://media.discordapp.net/attachments/468305263124807690/727180178467455107/009-user.png"
+                    rounded
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      filter: "invert(100%)",
+                    }}
+                    id="profileIcon"
+                  />
+                </AnimationWrapper>
+              </OverlayTrigger>
+            </div>
+            <div
+              style={{
+                width: "5vh",
+                textAlign: "center",
+                display: "inline-block",
+              }}
+            >
+              <AnimationWrapper>
+                <a href="/cart">
+                  <Image
+                    src="https://cdn.discordapp.com/attachments/468305263124807690/727180131608559656/001-shopping-cart.png"
+                    rounded
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      filter: "invert(100%)",
+                    }}
+                  />
+                </a>
+              </AnimationWrapper>
+            </div>
+          </div>
+          <Row style={{ paddingBottom: "2vh" }}></Row>
         </Container>
       </div>
     );
@@ -142,6 +171,7 @@ const imageStyle = {
 const mapStateToProps = (state) => {
   return {
     search: state.search,
+    browse: state.browse,
   };
 };
 const mapDispatchToProps = (dispatch) => {

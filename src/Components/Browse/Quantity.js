@@ -16,6 +16,7 @@ export class QuantityRaw extends Component {
   sub = () => {
     this.props.setQuantity(this.props.item.quantity - 1);
   };
+  getValue = () => {};
   render() {
     return (
       <InputGroup className="mb-3">

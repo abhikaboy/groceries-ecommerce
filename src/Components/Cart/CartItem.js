@@ -4,9 +4,39 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
-import { Quantity } from "../Browse/Quantity";
+import { CartQuantity } from "../Browse/CartQuantity";
+import { connect } from "react-redux";
+import { setCart } from "../../Actions/setCart";
+const axios = require("axios");
 
-export default class CartItem extends Component {
+class CartItemRaw extends Component {
+  remove = () => {
+    console.log(this.props.id);
+    axios({
+      method: "post",
+      url:
+        "http://runmobileapps.com/sales_intig/grocerry_backend/api/remove-cart-items",
+      params: {
+        product_id: this.props.id,
+        products: [this.props.id],
+        shop_id: 1,
+      },
+    })
+      .then((res) => this.updateCart())
+      .catch((err) => console.log(err));
+  };
+  updateCart = () => {
+    axios({
+      method: "post",
+      url:
+        "https://runmobileapps.com/sales_intig/grocerry_backend/api/cart-items-list?shop_id=1",
+      params: {
+        shop_id: 1,
+      },
+    })
+      .then((res) => this.props.setCart(res.data))
+      .catch((err) => console.log(err));
+  };
   render() {
     return (
       <Row style={{ width: "100%", paddingBottom: "2vh" }}>
@@ -56,15 +86,17 @@ export default class CartItem extends Component {
               >
                 {this.props.total}
               </p>
-              <Quantity
+              <CartQuantity
                 style={{
                   margin: "auto",
                 }}
+                quantity={this.props.quantity}
               />
               <div style={{ textAlign: "center" }}>
                 <Button
                   variant="danger"
                   style={{ textAlign: "center", margin: "auto" }}
+                  onClick={this.remove}
                 >
                   Remove
                 </Button>
@@ -76,3 +108,20 @@ export default class CartItem extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    cart: state.cart,
+    browse: state.browse,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  // propName: (parameters) => dispatch(action)
+  return {
+    setCart: (cart) => dispatch(setCart(cart)),
+  };
+};
+
+export const CartItem = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CartItemRaw);

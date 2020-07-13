@@ -7,8 +7,10 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
-
-export class Checkout extends Component {
+import { connect } from "react-redux";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
+export class CheckoutRaw extends Component {
   render() {
     return (
       <Container>
@@ -18,7 +20,41 @@ export class Checkout extends Component {
         <Row>
           <Container>
             <Row>
-              <Col sm={8}>
+              <Col sm={7}>
+                <Container fluid>
+                  <Row style={{ marginBottom: "0px" }}>
+                    <p>Shipping Method</p>
+                  </Row>
+                  <Row style={{ marginTop: "0px", width: "100%" }}>
+                    <DropdownButton
+                      title="Pickup"
+                      style={{ width: "100%" }}
+                      id="dropdown-basic"
+                    >
+                      <Dropdown.Item
+                        eventKey="1"
+                        onClick={this.select}
+                        option="Instore Pickup"
+                      >
+                        Instore Pickup
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        eventKey="2"
+                        onClick={this.select}
+                        option="Delivery"
+                      >
+                        Delivery
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        eventKey="3"
+                        onClick={this.select}
+                        option="Crubside Pickup"
+                      >
+                        Curbside Pickup
+                      </Dropdown.Item>
+                    </DropdownButton>
+                  </Row>
+                </Container>
                 <Container>
                   <Row style={{ paddingTop: "5px", paddingBottom: "5px" }}>
                     <h5>Shipping Info</h5>
@@ -95,7 +131,7 @@ export class Checkout extends Component {
                     borderRadius: "5px",
                   }}
                 >
-                  <Row style={{ padding: "2vh" }}>
+                  <Row style={{ padding: "3vh" }}>
                     <Col style={{ textAlign: "center" }}>
                       <h5>Order Summary</h5>
                     </Col>
@@ -110,41 +146,37 @@ export class Checkout extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>Apple</td>
-                          <td>4</td>
-                          <td>12.00</td>
-                        </tr>
-                        <tr>
-                          <td>Kiwi</td>
-                          <td>1</td>
-                          <td>2.00</td>
-                        </tr>
-                        <tr>
-                          <td>Oreos</td>
-                          <td>3</td>
-                          <td>22.00</td>
-                        </tr>
-                        <tr>
-                          <td>Pear</td>
-                          <td>2</td>
-                          <td>6.00</td>
-                        </tr>
+                        {this.props.cart.cart_items.map((cartItem) => (
+                          <tr>
+                            <td>{cartItem.product_name}</td>
+                            <td>{cartItem.quantity}</td>
+                            <td>{cartItem.total_cost}</td>
+                          </tr>
+                        ))}
                       </tbody>
                     </Table>
                   </Row>
                   <Row>
                     <Col>
                       <div style={{ textAlign: "right", paddingRight: "2vw" }}>
-                        <p style={{ padding: "0px" }}>Subtotal: $32.00</p>
-                        <p style={{ padding: "0px" }}>Delivery: $3.00</p>
-                        <p style={{ padding: "0px" }}>Tax: $1.96</p>
+                        <p style={{ padding: "0px" }}>
+                          Subtotal: ${this.props.cart.total_cart_cost}
+                        </p>
+                        <p style={{ padding: "0px" }}>
+                          Delivery: ${this.props.cart.delivery_fees}
+                        </p>
+                        <p style={{ padding: "0px" }}>
+                          Convience: ${this.props.cart.convenience_fees}
+                        </p>
+                        <p style={{ padding: "0px" }}>
+                          Tax: ${this.props.cart.sales_tax}
+                        </p>
                       </div>
                     </Col>
                   </Row>
                   <Row style={{ textAlign: "center", margin: "auto" }}>
                     <Col>
-                      <h5>Total: $36.96</h5>
+                      <h5>Total: ${this.props.cart.cart_grand_total}</h5>
                     </Col>
                   </Row>
                   <Row>
@@ -169,5 +201,16 @@ export class Checkout extends Component {
     );
   }
 }
-
-export default Checkout;
+const mapStateToProps = (state) => {
+  return {
+    cart: state.cart,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  // propName: (parameters) => dispatch(action)
+  return {};
+};
+export const Checkout = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CheckoutRaw);

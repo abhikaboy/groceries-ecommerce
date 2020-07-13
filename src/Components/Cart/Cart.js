@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
-import CartItem from "./CartItem";
+import { CartItem } from "./CartItem";
 import { connect } from "react-redux";
 import { setCart } from "../../Actions/setCart";
 const axios = require("axios");
@@ -35,9 +35,12 @@ export class CartRaw extends Component {
   }
   createItems = (department) => {
     let items = this.props.cart.cart_items;
+    console.log("items");
     console.log(items);
     let filtered = items.filter(
-      (item) => item.department_name == department.name
+      (item) =>
+        item.department_name == department.name ||
+        item.category == department.name
     );
     let elements = filtered.map((item) => (
       <Row>
@@ -47,6 +50,7 @@ export class CartRaw extends Component {
           price={item.per_unit_price}
           total={item.total_cost}
           quantity={item.quantity}
+          id={item.product_id}
         />
       </Row>
     ));
@@ -61,10 +65,19 @@ export class CartRaw extends Component {
         <Row style={{ paddingTop: "20px", paddingBottom: "20px" }}>
           <h2>Cart</h2>
         </Row>
-        <Row></Row>
         {this.props.browse.departments.map((department) =>
           this.createItems(department)
         )}
+        <Row style={center}>
+          <Col>
+            <h3>Items: {this.props.cart.total_cart_items}</h3>
+          </Col>
+        </Row>
+        <Row style={center}>
+          <Col>
+            <h3>Subtotal: {this.props.cart.total_cart_cost}</h3>
+          </Col>
+        </Row>
         <Row>
           <Button
             style={{
@@ -95,5 +108,11 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setCart: (cart) => dispatch(setCart(cart)),
   };
+};
+const center = {
+  textAlign: "center",
+  width: "100%",
+  padding: "10px",
+  margin: "auto",
 };
 export const Cart = connect(mapStateToProps, mapDispatchToProps)(CartRaw);
