@@ -19,12 +19,36 @@ import { SearchOverlay } from "./Components/NavBar/SearchOverlay";
 import { setDepartments } from "./Actions/setDepartments";
 import { setCategories } from "./Actions/setCategories";
 import { setCart } from "./Actions/setCart";
+import { setFrequentlyBought } from "./Actions/setFrequentlyBought";
+import { setRecentlyBought } from "./Actions/setRecentlyBought";
 const axios = require("axios");
 //const proxyurl = "https://cors-anywhere.herokuapp.com/";
 
 export class AppRaw extends Component {
   // setting defaults
   componentDidMount() {
+    axios({
+      method: "post",
+      url:
+        "http://runmobileapps.com/sales_intig/grocerry_backend/api/product-list",
+      params: {
+        shop_id: 1,
+        get_mostly_baught: 1,
+      },
+    })
+      .then((res) => this.props.setFrequentlyBought(res.data))
+      .catch((err) => console.log(err));
+    axios({
+      method: "post",
+      url:
+        "http://runmobileapps.com/sales_intig/grocerry_backend/api/product-list",
+      params: {
+        shop_id: 1,
+        get_recently_baught: 1,
+      },
+    })
+      .then((res) => this.props.setRecentlyBought(res.data))
+      .catch((err) => console.log(err));
     axios({
       method: "post",
       url:
@@ -97,6 +121,8 @@ const mapDispatchToProps = (dispatch) => {
     setDepartments: (departments) => dispatch(setDepartments(departments)),
     setCategories: (categories) => dispatch(setCategories(categories)),
     setCart: (cart) => dispatch(setCart(cart)),
+    setFrequentlyBought: (products) => dispatch(setFrequentlyBought(products)),
+    setRecentlyBought: (products) => dispatch(setRecentlyBought(products)),
   };
 };
 export const App = connect(mapStateToProps, mapDispatchToProps)(AppRaw);

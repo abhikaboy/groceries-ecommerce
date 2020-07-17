@@ -27,10 +27,7 @@ export class CategoryProducts extends Component {
             <Col sm={6} xs={12} md={4} lg={3}></Col>,
             <Col sm={6} xs={12} md={4} lg={3}></Col>,
             <Col sm={6} xs={12} md={4} lg={3}></Col>,
-            <Col sm={6} xs={12} md={4} lg={3}>
-              {" "}
-              sm={6} xs={12} md={4} lg={3}
-            </Col>,
+            <Col sm={6} xs={12} md={4} lg={3}></Col>,
           ]);
           console.log("adding row!");
         }
@@ -40,6 +37,7 @@ export class CategoryProducts extends Component {
               price={products[i].price}
               name={products[i].name}
               description={products[i].description}
+              size={products[i].pack_size}
               id={products[i].id}
               img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
             />
@@ -57,7 +55,7 @@ export class CategoryProducts extends Component {
       return (
         <Row>
           {" "}
-          <h4>Oops, we couldn't find anything!</h4>
+          <h5>No Products Found</h5>
         </Row>
       );
     }

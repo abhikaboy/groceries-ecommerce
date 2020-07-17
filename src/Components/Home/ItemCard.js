@@ -18,9 +18,10 @@ const axios = require("axios");
 export class ItemCardRaw extends Component {
   constructor(props) {
     super(props);
-    this.state = { hovered: false };
+    this.state = { hovered: false, addCartAnimation: false };
   }
   afterAdd = (res) => {
+    this.setState({ hovered: true, addCartAnimation: true });
     this.props.setQuantity(1);
     axios({
       method: "post",
@@ -51,19 +52,13 @@ export class ItemCardRaw extends Component {
     console.log(this.props.id);
   };
   clickFunc = () => {
-    // this.props.setActive({
-    //   name: this.props.name,
-    //   url: this.props.img,
-    //   price: this.props.price,
-    //   description: "this is the description",
-    //   display: true,
-    // });
+    this.setState({ hovered: true, addCartAnimation: false });
   };
   mouseOver = () => {
-    this.setState({ hovered: true });
+    this.setState({ ...this.state, hovered: true });
   };
   mouseOut = () => {
-    this.setState({ hovered: false });
+    this.setState({ hovered: false, addCartAnimation: false });
     this.props.setQuantity(1);
   };
   checkCart = () => {
@@ -72,7 +67,20 @@ export class ItemCardRaw extends Component {
     );
     if (filtered.length > 0) {
       return (
-        <h6 style={{ backgroundColor: "rgba(0,255,0,0.2)" }}>Item In Cart</h6>
+        <h6
+          style={{
+            backgroundColor: "rgba(12,12,100,1)",
+            color: "white",
+            position: "fixed",
+            padding: "1.5vh",
+            paddingLeft: "2vh",
+            clipPath: "polygon(0 0%, 100% 0%, 100% 30%, 0 100%)",
+            width: "100%",
+            fontFamily: "Raleway",
+          }}
+        >
+          In Cart
+        </h6>
       );
     } else {
       return <div></div>;
@@ -101,6 +109,37 @@ export class ItemCardRaw extends Component {
           onPointerEnter={this.mouseOver}
           onPointerLeave={this.mouseOut}
         >
+          {this.checkCart()}
+          <CSSTransition
+            in={this.state.addCartAnimation}
+            timeout={300}
+            classNames="addedToCart"
+            unmountOnExit
+          >
+            <div
+              style={{
+                position: "absolute",
+                margin: "auto",
+                textAlign: "center",
+                backgroundColor: "rgba(255,255,255,0.8)",
+                paddingTop: "70%",
+                height: "100%",
+                width: "100%",
+                zIndex: "10",
+              }}
+            >
+              <div
+                style={{
+                  width: "70%",
+                  textAlign: "center",
+                  margin: "auto",
+                  color: "black",
+                }}
+              >
+                <h5>Added To Cart!</h5>
+              </div>
+            </div>
+          </CSSTransition>
           <CSSTransition
             in={this.state.hovered}
             timeout={300}
@@ -113,9 +152,6 @@ export class ItemCardRaw extends Component {
                 margin: "auto",
                 textAlign: "center",
                 backgroundColor: "rgba(52,255,52,0.3)",
-
-                //backgroundColor: "rgba(255,255,52,0.3)",
-                //backgroundColor: "rgba(0,0,0,0.5)",
                 paddingTop: "50%",
                 height: "100%",
                 width: "100%",
@@ -138,17 +174,17 @@ export class ItemCardRaw extends Component {
           <Card.Body>
             <ListGroup variant="flush" style={center}>
               <ListGroup.Item>{this.props.name}</ListGroup.Item>
-              <ListGroup.Item>{this.props.description}</ListGroup.Item>
+              <ListGroup.Item>
+                {this.props.description}
+                <br></br>
+                {this.props.size}
+              </ListGroup.Item>
               <ListGroup.Item style={{ color: "rgb(50,200,50)" }}>
                 In Stock
               </ListGroup.Item>
             </ListGroup>
           </Card.Body>
-          <Card.Footer style={center}>
-            {this.checkCart()}
-            <br></br>
-            {this.props.price}
-          </Card.Footer>
+          <Card.Footer style={center}>{this.props.price}</Card.Footer>
         </Card>
       </AnimationWrapper>
     );

@@ -11,6 +11,16 @@ import { connect } from "react-redux";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 export class CheckoutRaw extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      paymentMethod: "Delivery",
+    };
+  }
+  select = (e) => {
+    let option = e.currentTarget.attributes["option"].value;
+    this.setState({ ...this.state, paymentMethod: option });
+  };
   render() {
     return (
       <Container>
@@ -27,7 +37,7 @@ export class CheckoutRaw extends Component {
                   </Row>
                   <Row style={{ marginTop: "0px", width: "100%" }}>
                     <DropdownButton
-                      title="Pickup"
+                      title={this.state.paymentMethod}
                       style={{ width: "100%" }}
                       id="dropdown-basic"
                     >
@@ -55,42 +65,44 @@ export class CheckoutRaw extends Component {
                     </DropdownButton>
                   </Row>
                 </Container>
-                <Container>
-                  <Row style={{ paddingTop: "5px", paddingBottom: "5px" }}>
-                    <h5>Shipping Info</h5>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <InputGroup style={{ paddingTop: "2vh" }}>
-                        <FormControl placeholder="First Name"></FormControl>
-                      </InputGroup>
-                    </Col>
-                    <Col>
-                      <InputGroup style={{ paddingTop: "2vh" }}>
-                        <FormControl placeholder="Last Name"></FormControl>
-                      </InputGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <InputGroup style={{ paddingTop: "2vh" }}>
-                        <FormControl placeholder="Phone Number"></FormControl>
-                      </InputGroup>
-                    </Col>
-                  </Row>
-                  <InputGroup style={{ paddingTop: "2vh" }}>
-                    <FormControl placeholder="Address Line 1"></FormControl>
-                  </InputGroup>
-                  <InputGroup style={{ paddingTop: "2vh" }}>
-                    <FormControl placeholder="Address Line 2 (optional)"></FormControl>
-                  </InputGroup>
-                  <InputGroup style={{ paddingTop: "2vh" }}>
-                    <FormControl placeholder="Zip Code"></FormControl>
-                  </InputGroup>
-                  <InputGroup style={{ paddingTop: "2vh" }}>
-                    <FormControl placeholder="City"></FormControl>
-                  </InputGroup>
-                </Container>
+                {this.state.paymentMethod == "Delivery" && (
+                  <Container>
+                    <Row style={{ paddingTop: "5px", paddingBottom: "5px" }}>
+                      <h5>Shipping Info</h5>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <InputGroup style={{ paddingTop: "2vh" }}>
+                          <FormControl placeholder="First Name"></FormControl>
+                        </InputGroup>
+                      </Col>
+                      <Col>
+                        <InputGroup style={{ paddingTop: "2vh" }}>
+                          <FormControl placeholder="Last Name"></FormControl>
+                        </InputGroup>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <InputGroup style={{ paddingTop: "2vh" }}>
+                          <FormControl placeholder="Phone Number"></FormControl>
+                        </InputGroup>
+                      </Col>
+                    </Row>
+                    <InputGroup style={{ paddingTop: "2vh" }}>
+                      <FormControl placeholder="Address Line 1"></FormControl>
+                    </InputGroup>
+                    <InputGroup style={{ paddingTop: "2vh" }}>
+                      <FormControl placeholder="Address Line 2 (optional)"></FormControl>
+                    </InputGroup>
+                    <InputGroup style={{ paddingTop: "2vh" }}>
+                      <FormControl placeholder="Zip Code"></FormControl>
+                    </InputGroup>
+                    <InputGroup style={{ paddingTop: "2vh" }}>
+                      <FormControl placeholder="City"></FormControl>
+                    </InputGroup>
+                  </Container>
+                )}
                 <Container>
                   <Row style={{ paddingTop: "5vh", paddingBottom: "5px" }}>
                     <h5>Payment Information</h5>

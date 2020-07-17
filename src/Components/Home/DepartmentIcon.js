@@ -36,6 +36,7 @@ export class DepartmentIcon extends Component {
 }
 
 const button = {
-  padding: "8vh",
+  width: "100%",
+  height: "100%",
 };
 export default DepartmentIcon;

@@ -5,3 +5,6 @@ export const SET_ACTIVE_DEPARTMENT = "setActiveDepartment";
 export const SET_DEPARTMENTS = "setDepartments";
 export const SET_CATEGORIES = "setCategories";
 export const SET_CART = "setCart";
+export const SET_FREQUENTLY_BOUGHT = "setFrequentlyBought";
+export const SET_RECENTLY_BOUGHT = "setRecentlyBought";
+export const SET_ACTIVE_CATEGORY = "setActiveCategory";

@@ -7,48 +7,112 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import { ItemCard } from "./ItemCard";
 import { DepartmentIcon } from "./DepartmentIcon";
+import { setFrequentlyBought } from "../../Actions/setFrequentlyBought";
 
 import { connect } from "react-redux";
+const axios = require("axios");
 export class HomeRaw extends Component {
+  componentDidMount() {}
   generateTable = (products) => {
     console.log(products);
-    console.log(this.props.category);
-    if (products.length > 0) {
-      let total = [];
-      let rows = [];
-      for (let i = 0; i < products.length; i++) {
-        console.log(products[i]);
-        if (i % 4 == 0) {
-          console.log(i);
-          // ready to start a new row
-          rows.push([<Col></Col>, <Col></Col>, <Col>e</Col>, <Col>e</Col>]);
-          console.log("adding row!");
-        }
-        rows[rows.length - 1][i % 4] = (
-          <Col>
-            <DepartmentIcon
-              name={products[i].name}
-              src="
+    try {
+      if (products.length > 0) {
+        let total = [];
+        let rows = [];
+        for (let i = 0; i < products.length; i++) {
+          console.log(products[i]);
+          if (i % 4 == 0) {
+            console.log(i);
+            // ready to start a new row
+            rows.push([
+              <Col sm={6} xs={12} md={4} lg={3}></Col>,
+              <Col sm={6} xs={12} md={4} lg={3}></Col>,
+              <Col sm={6} xs={12} md={4} lg={3}></Col>,
+              <Col sm={6} xs={12} md={4} lg={3}></Col>,
+            ]);
+            console.log("adding row!");
+          }
+          rows[rows.length - 1][i % 4] = (
+            <Col sm={6} xs={12} md={4} lg={3}>
+              <DepartmentIcon
+                name={products[i].name}
+                src="
                 https://img.icons8.com/cotton/2x/steak-rare.png"
-            />
-          </Col>
+              />
+            </Col>
+          );
+        }
+        for (let i = 0; i < rows.length; i++) {
+          console.log(total);
+          console.log(rows[i]);
+          total.push(
+            <Row style={{ width: "150%", padding: "3vh" }}>{rows[i]}</Row>
+          );
+        }
+        console.log("TOTAL!!!");
+        return total;
+      } else {
+        return (
+          <Row>
+            {" "}
+            <h4>Department Not Found</h4>
+          </Row>
         );
       }
-      for (let i = 0; i < rows.length; i++) {
-        console.log(total);
-        console.log(rows[i]);
-        total.push(<Row style={{ width: "150%" }}>{rows[i]}</Row>);
-      }
-      console.log("TOTAL!!!");
-      return total;
-    } else {
-      return (
-        <Row>
-          {" "}
-          <h4>Department Not Found</h4>
-        </Row>
-      );
+    } catch (err) {
+      console.log(err);
     }
+  };
+  generateItemTable = (products) => {
+    try {
+      if (products.length > 0) {
+        let total = [];
+        let rows = [];
+        for (let i = 0; i < products.length; i++) {
+          console.log(products[i]);
+          if (i % 4 == 0) {
+            console.log(i);
+            // ready to start a new row
+            rows.push([
+              <Col sm={6} xs={12} md={4} lg={3}></Col>,
+              <Col sm={6} xs={12} md={4} lg={3}></Col>,
+              <Col sm={6} xs={12} md={4} lg={3}></Col>,
+              <Col sm={6} xs={12} md={4} lg={3}>
+                {" "}
+                sm={6} xs={12} md={4} lg={3}
+              </Col>,
+            ]);
+            console.log("adding row!");
+          }
+          rows[rows.length - 1][i % 4] = (
+            <Col sm={6} xs={12} md={4} lg={3}>
+              <ItemCard
+                price={products[i].price}
+                name={products[i].name}
+                description={products[i].description}
+                size={products[i].pack_size}
+                id={products[i].id}
+                img="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
+              />
+            </Col>
+          );
+        }
+        for (let i = 0; i < rows.length; i++) {
+          console.log(total);
+          console.log(rows[i]);
+          total.push(<Row>{rows[i]}</Row>);
+        }
+        console.log("TOTAL!!!");
+        return total;
+      } else {
+        return (
+          <Row>
+            {" "}
+            <h4>Oops, we couldn't find anything!</h4>
+          </Row>
+        );
+      }
+    } catch (err) {}
   };
   render() {
     return (
@@ -77,13 +141,6 @@ export class HomeRaw extends Component {
                   <h2 style={featureText}>Fresh Food</h2>
                 </div>
               </Carousel.Item>
-              {/* <Carousel.Item style={carouselStyle}>
-                <Image
-                  thumbnail
-                  fluid
-                  src="https://wallpaperplay.com/walls/full/6/9/a/317893.jpg"
-                ></Image>
-              </Carousel.Item> */}
             </Carousel>
           </Col>
         </Row>
@@ -92,6 +149,8 @@ export class HomeRaw extends Component {
             backgroundColor: "rgb(248,248,248)",
             color: "black",
             padding: "6vh",
+
+            clipPath: "polygon(0 0%, 100% 0%, 100% 80%, 0 100%)",
           }}
         >
           <h2
@@ -142,9 +201,12 @@ export class HomeRaw extends Component {
         </Row>
         <Row
           style={{
-            backgroundColor: "rgb(45,45,45)",
+            backgroundColor: "rgb(52,52,52)",
             color: "white",
             padding: "5vh",
+            paddingBottom: "8vh",
+            clipPath: "polygon(0 17%, 100% 0, 100% 100%, 0 100%)",
+            marginBottom: "0px",
           }}
         >
           <h2
@@ -162,7 +224,9 @@ export class HomeRaw extends Component {
             backgroundColor: "rgb(52,52,52)",
             paddingTop: "2vh",
             paddingBottom: "10vh",
-            boxShadow: "0px 5px 6px grey",
+            boxShadow: "0px 10px 10px black",
+            clipPath: "polygon(0 0%, 100% 0, 100% 97%, 0 100%)",
+            marginTop: "0px",
           }}
         >
           <Container>
@@ -173,7 +237,7 @@ export class HomeRaw extends Component {
         </Row>
         <Row
           style={{
-            backgroundColor: "rgb(248,248,248 )",
+            backgroundColor: "rgb(255,255,255 )",
             color: "black",
             padding: "5vh",
           }}
@@ -185,37 +249,40 @@ export class HomeRaw extends Component {
               fontFamily: "Raleway",
             }}
           >
-            New Additions
+            Your Favorites
           </h2>
         </Row>
         <Row style={{ padding: "5vh" }}>
           <Container>
             <Row>
-              <Col>
-                <ItemCard
-                  name="Pineapple"
-                  price="10"
-                  img="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F12%2F2013%2F07%2Fpineapple-pesticide-400x400.jpg"
-                />
-              </Col>
-              <Col>
-                <ItemCard
-                  name="Pineapple"
-                  price="10"
-                  img="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F12%2F2013%2F07%2Fpineapple-pesticide-400x400.jpg"
-                />
-              </Col>
-              <Col>
-                <ItemCard
-                  name="Pineapple"
-                  price="10"
-                  img="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F12%2F2013%2F07%2Fpineapple-pesticide-400x400.jpg"
-                />
-              </Col>
+              {this.generateItemTable(this.props.browse.frequentlyBought.data)}
             </Row>
           </Container>
         </Row>
-        <Row></Row>
+        <Row
+          style={{
+            backgroundColor: "rgb(255,255,255 )",
+            color: "black",
+            padding: "5vh",
+          }}
+        >
+          <h2
+            style={{
+              textAlign: "center",
+              margin: "auto",
+              fontFamily: "Raleway",
+            }}
+          >
+            Recently Bought
+          </h2>
+        </Row>
+        <Row style={{ padding: "5vh" }}>
+          <Container>
+            <Row>
+              {this.generateItemTable(this.props.browse.recentlyBought.data)}
+            </Row>
+          </Container>
+        </Row>
       </Container>
     );
   }
@@ -274,7 +341,9 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   // propName: (parameters) => dispatch(action)
-  return {};
+  return {
+    setFrequentlyBought: (products) => dispatch(setFrequentlyBought(products)),
+  };
 };
 
 export const Home = connect(mapStateToProps, mapDispatchToProps)(HomeRaw);

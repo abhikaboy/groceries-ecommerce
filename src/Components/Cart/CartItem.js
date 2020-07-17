@@ -7,10 +7,17 @@ import Button from "react-bootstrap/Button";
 import { CartQuantity } from "../Browse/CartQuantity";
 import { connect } from "react-redux";
 import { setCart } from "../../Actions/setCart";
+import { CSSTransition } from "react-transition-group";
+import "./styles.css";
 const axios = require("axios");
 
 class CartItemRaw extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { active: true };
+  }
   remove = () => {
+    this.setState({ active: false });
     console.log(this.props.id);
     axios({
       method: "post",
@@ -38,73 +45,135 @@ class CartItemRaw extends Component {
       .catch((err) => console.log(err));
   };
   render() {
-    return (
-      <Row style={{ width: "100%", paddingBottom: "2vh" }}>
-        <Container
-          fluid
-          style={{
-            border: "solid",
-            borderRadius: "10px",
-            borderColor: "rgba(70,70,70,0.2)",
-            paddingTop: "1vh",
-            paddingBottom: "1vh",
-          }}
-        >
-          <Row style={{ margin: "auto" }}>
-            <Col>
-              <Image
-                src="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
-                style={{ width: "120px", height: "120px" }}
-                thumbnail
-              />
-            </Col>
-            <Col sm={8}>
-              <h3 style={{ paddingTop: "10px", marginBottom: "0px" }}>
-                {this.props.name}
-              </h3>
-              <p
-                style={{
-                  marginTop: "0px",
-                  paddingTop: "0px",
-                  marginBottom: "0px",
-                }}
-              >
-                In Stock
-              </p>
-              <p>{this.props.description}</p>
-            </Col>
-            <Col
+    /*
+              <CSSTransition
+            in={this.state.addCartAnimation}
+            timeout={300}
+            classNames="addedToCart"
+            unmountOnExit
+          >
+            <div
               style={{
-                color: "black",
+                position: "absolute",
                 margin: "auto",
-                borderLeft: "solid",
-                borderColor: "rgba(70,70,70,0.2)",
+                textAlign: "center",
+                backgroundColor: "rgba(255,255,255,0.8)",
+                paddingTop: "70%",
+                height: "100%",
+                width: "100%",
+                zIndex: "10",
               }}
             >
-              <p
-                style={{ padding: "15px", margin: "auto", textAlign: "center" }}
-              >
-                {this.props.total}
-              </p>
-              <CartQuantity
+              <div
                 style={{
+                  width: "70%",
+                  textAlign: "center",
                   margin: "auto",
+                  color: "black",
                 }}
-                quantity={this.props.quantity}
-              />
-              <div style={{ textAlign: "center" }}>
-                <Button
-                  variant="danger"
-                  style={{ textAlign: "center", margin: "auto" }}
-                  onClick={this.remove}
-                >
-                  Remove
-                </Button>
+              >
+                <h5>Added To Cart!</h5>
               </div>
-            </Col>
-          </Row>
-        </Container>
-      </Row>
+            </div>
+          </CSSTransition>
+    */
+    return (
+      <CSSTransition
+        in={this.state.active}
+        timeout={500}
+        classNames="itemTransition"
+      >
+        <Row style={{ width: "100%", paddingBottom: "2vh" }}>
+          <Container
+            fluid
+            style={{
+              border: "solid",
+              borderRadius: "10px",
+              borderColor: "rgba(70,70,70,0.2)",
+              paddingTop: "1vh",
+              paddingBottom: "1vh",
+            }}
+          >
+            <Row style={{ margin: "auto" }}>
+              <Col>
+                <Image
+                  src="https://everfreshfruit.com/wp-content/uploads/2018/05/Fuji-Apple_1000-400x400.jpg"
+                  style={{ width: "120px", height: "120px" }}
+                  thumbnail
+                />
+              </Col>
+              <Col sm={8}>
+                <h3
+                  style={{
+                    paddingTop: "10px",
+                    marginBottom: "0px",
+                    fontFamily: "Raleway",
+                  }}
+                >
+                  {this.props.name}
+                </h3>
+                <p
+                  style={{
+                    marginTop: "0px",
+                    paddingTop: "0px",
+                    marginBottom: "0px",
+
+                    fontFamily: "Roboto",
+                  }}
+                >
+                  In Stock
+                </p>
+                <p
+                  style={{
+                    fontFamily: "Roboto",
+                  }}
+                >
+                  {this.props.description}
+                </p>
+              </Col>
+              <Col
+                style={{
+                  color: "black",
+                  margin: "auto",
+                  borderLeft: "solid",
+                  borderColor: "rgba(70,70,70,0.2)",
+                }}
+              >
+                <p
+                  style={{
+                    padding: "15px",
+                    margin: "auto",
+                    textAlign: "center",
+                    fontFamily: "Roboto",
+                  }}
+                >
+                  {this.props.total}
+                </p>
+                <CartQuantity
+                  style={{
+                    margin: "auto",
+                    fontFamily: "Roboto",
+                  }}
+                  quantity={this.props.quantity}
+                />
+                <div style={{ textAlign: "center" }}>
+                  <Button
+                    variant="danger"
+                    style={{
+                      textAlign: "center",
+                      margin: "auto",
+                      fontFamily: "Roboto",
+                    }}
+                    onClick={this.remove}
+                  >
+                    Remove
+                  </Button>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </Row>
+      </CSSTransition>
     );
   }
 }

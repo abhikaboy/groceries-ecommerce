@@ -161,6 +161,7 @@ const center = {
   textAlign: "center",
   margin: "auto",
   textColor: "white",
+  fontFamily: "Raleway",
 };
 const imageStyle = {
   width: "240px",

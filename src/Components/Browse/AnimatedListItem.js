@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
-
+import Accordion from "react-bootstrap/Accordion";
 import { AnimationWrapper } from "react-hover-animation";
 import { connect } from "react-redux";
 import { setActiveDepartment } from "../../Actions/setActiveDepartment";
@@ -42,7 +42,7 @@ export class AnimatedListItemRaw extends Component {
         }}
       >
         <ListGroup.Item style={style} onClick={this.clickHandle}>
-          {this.props.name}
+          <Accordion>{this.props.name}</Accordion>
         </ListGroup.Item>
       </AnimationWrapper>
     );

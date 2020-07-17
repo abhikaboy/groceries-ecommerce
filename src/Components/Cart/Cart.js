@@ -114,5 +114,6 @@ const center = {
   width: "100%",
   padding: "10px",
   margin: "auto",
+  fontFamily: "Roboto",
 };
 export const Cart = connect(mapStateToProps, mapDispatchToProps)(CartRaw);
